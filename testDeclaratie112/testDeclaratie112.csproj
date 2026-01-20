@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="iTextSharp" Version="5.5.13.4" />
       <PackageReference Include="QuestPDF" Version="2025.12.3" />
     </ItemGroup>
 
