@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
-using System.Xml.Schema;
 using System.Xml.Linq;
 using iTextSharp.text.pdf;
+using testDeclaratie112;
 
 namespace Declaratie112Generator
 {
@@ -30,6 +28,28 @@ namespace Declaratie112Generator
     {
         static void Main(string[] args)
         {
+            Angajat employee = new Angajat()
+            {
+                Nume = "John Doe",
+                NormaLunară = 144.0,
+                OreLucrate = 144.0,
+                SalariuBrutCim = 12000.0,
+                Bonus = 0.0,
+                AvntajeNatura = 0.0,
+                TicheteMasa=18.0
+            };
+
+            ISalaryCalculator salaryCalculator = new SalaryCalculator();
+            ITaxCalculator taxCalculator = new CalculatorTaxe();
+            SalaryReport report = new SalaryReport(salaryCalculator, taxCalculator);
+            
+            double netSalary = report.GenerateReport(employee);
+            Console.WriteLine($"Salariu net: {netSalary:F2}"); // Rezultat: 6934.00
+            
+            IExporter exporter = new CsvExporter();
+            exporter.Export(employee, (employee.Nume +" raport.csv"));
+            Console.WriteLine("Fișierul CSV a fost generat cu succes!");
+            
             Console.OutputEncoding = Encoding.UTF8;
             AfiseazaBanner();
             
